@@ -1,18 +1,20 @@
+from input import get_input
 
+def print_options(options: dict):
+    options_str = ''
 
-def print_choices(choices: dict):
-    choices_str = ''
-
-    end = len(choices) - 1 if "description" in choices.keys() else len(choices)
+    end = len(options) - 1 if "description" in options.keys() else len(options)
 
     for i in range(end):
 
-        choices_str += f"{i+1}: {choices[i]['text']}\n"
+        options_str += f"{i+1}: {options[i]['text']}\n"
 
-    if "description" in choices.keys():
-        print(choices["description"])
+    if "description" in options.keys():
+        print(options["description"])
     
-    print(choices_str)
+    print(options_str)
+
+    print('> ', end='') #prepare input to be taken
 
 
 
@@ -29,49 +31,74 @@ def intro_dialogue(name: str) -> None:
     print(intro)
 
 
+def initial_inventory_check():
+    '''
+    This function will only be ran once, in the case that the player checks
+    their inventory during the first path. Therefore, inventory should always
+    be empty at this point.
+    '''
 
-def get_initial_choices() -> list:
+    mocking_text = '''
+    You have nothing. You just woke up as a cactus in a cave, what did you expect
+    to have with you? 
+    '''
+
+    print(mocking_text)
+
+
+
+
+#TODO: fill in "next" fields for each path
+
+def get_initial_options() -> list:
 
     '''
-    Return dictionary of possible choices & the function that should be ran next in order
-    to advance the story. 
+    Return dictionary of possible options & the function that should be ran next in order
+    to advance the story. Also has a "back" field to denote if you will come back to these
+    options after selecting this option. For example, back is True for options[4] so once
+    you check your inventory you will return to this set of options (with options[4] removed).
     '''
 
-    choices = dict()
+    options = dict()
 
-    choices["description"] = '''
+    options["description"] = '''
     You are just inside the entrance of a dark, uninviting cave. You realize you have absolutely
     no supplies to work with for the time being. Unfamiliar with your surroundings, you decide your
     first course of action will be...
 '''
     
 
-    choices[0] = {
+    options[0] = {
         "text": "Leave the cave. You're a cactus, why are you in the cave anyway?",
-        "next": "placeholder"
+        "next": "placeholder",
+        "back": False
     }
 
-    choices[1] = {
+    options[1] = {
         "text": "Attempt to interpret the odd drawings on the walls.",
-        "next": "placeholder"
+        "next": "placeholder",
+        "back": False
     }
 
-    choices[2] = {
+    options[2] = {
         "text": "Cry out for help.",
-        "next": "placeholder"
+        "next": "placeholder",
+        "back": False
     }
 
-    choices[3] = {
+    options[3] = {
         "text": "Do nothing. You're a cactus, this is literally what you were made for.",
-        "next": "placeholder"
+        "next": "placeholder",
+        "back": False
     }
 
-    choices[4] = {
+    options[4] = {
         "text": "Check your inventory.",
-        "next": "placeholder"
+        "next": initial_inventory_check,
+        "back": True
     }
 
 
-    return choices 
+    return options 
 
 
