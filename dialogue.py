@@ -66,6 +66,11 @@ def get_initial_choices() -> list:
         "next": "placeholder"
     }
 
+    choices[4] = {
+        "text": "Check your inventory.",
+        "next": "placeholder"
+    }
+
 
     return choices 
 
